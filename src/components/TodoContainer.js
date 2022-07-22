@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import TodoItem from "./TodoItem";
 import {
   TodoWrapper,
@@ -20,9 +20,19 @@ export default function TodoContainer() {
   const [value, setValue] = useState("");
   const [filter, setFilter] = useState("all");
 
+  useEffect(() => {
+    if (localStorage.getItem("savedTasks")) {
+      const savedTasks = JSON.parse(localStorage.getItem("savedTasks"));
+      console.log(savedTasks);
+      setTodos(savedTasks);
+    }
+  }, []);
+
   const handleAddTodo = useCallback(() => {
     if (!value) return alert("wanna type something?");
-    setTodos((todo) => [{ id: id.current, content: value }, ...todos]);
+    const todo = { id: id.current, content: value };
+    localStorage.setItem("savedTasks", JSON.stringify([...todos, todo]));
+    setTodos([...todos, todo]);
     setValue("");
     id.current++;
   }, [todos, value]);
