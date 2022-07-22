@@ -7,7 +7,7 @@ import {
   ButtonWrapper,
 } from "./styles/TodoItem.style";
 
-function TodoItem({ todo, handleDeleteTodo, handleTodoIsDone }) {
+const TodoItem = ({ todo, handleDeleteTodo, handleTodoIsDone }) => {
   const handleDeleteClick = () => {
     handleDeleteTodo(todo.id);
   };
@@ -27,6 +27,6 @@ function TodoItem({ todo, handleDeleteTodo, handleTodoIsDone }) {
       </ButtonWrapper>
     </Todo>
   );
-}
+};
 
 export default memo(TodoItem);
