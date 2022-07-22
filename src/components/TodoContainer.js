@@ -28,7 +28,7 @@ export default function TodoContainer() {
   }, []);
 
   const handleAddTodo = useCallback(() => {
-    if (!value) return alert("wanna type something?");
+    if (!value || value.trim() === "") return;
     const todo = { id: id.current, content: value, isDone: false };
     localStorage.setItem("savedTasks", JSON.stringify([...todos, todo]));
     setTodos([...todos, todo]);
