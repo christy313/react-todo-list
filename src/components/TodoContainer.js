@@ -1,98 +1,18 @@
 import React, { useState, useRef, useCallback } from "react";
 import TodoItem from "./TodoItem";
-import styled from "styled-components";
-
-const TodoWrapper = styled.div`
-  font-family: "ubuntu";
-  margin: 30px auto;
-  width: 480px;
-  border: 3px solid #f5f5f5;
-  border-radius: 5px;
-  padding: 30px;
-  text-align: center;
-  box-shadow: 3px 3px 5px #ccc;
-`;
-
-const Title = styled.h1`
-  color: #28262c;
-  font-size: 48px;
-`;
-
-const CreateTodo = styled.div`
-  margin: 20px auto;
-`;
-
-const TodoInput = styled.input`
-  margin-right: 10px;
-  width: 300px;
-  height: 24px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px #ccc;
-`;
-
-const AddButton = styled.button`
-  font-family: "ubuntu";
-  width: 80px;
-  background: black;
-  color: white;
-  border-radius: 3px;
-  box-shadow: 1px 1px 3px #666;
-  border: none;
-  padding: 5px;
-`;
-
-const SelectTodo = styled.div``;
-
-const AllButton = styled.button`
-  font-family: "ubuntu";
-  width: 80px;
-  background: #39393a;
-  color: white;
-  border-radius: 3px;
-  box-shadow: 1px 1px 3px #666;
-  border: none;
-  padding: 5px;
-`;
-
-const ActiveButton = styled.button`
-  font-family: "ubuntu";
-  width: 80px;
-  background: #ffe74c;
-  color: #333;
-  border-radius: 3px;
-  box-shadow: 1px 1px 3px #666;
-  border: none;
-  padding: 5px;
-  margin: 0 10px;
-`;
-
-const CompletedButton = styled.button`
-  font-family: "ubuntu";
-  width: 80px;
-  background: #666;
-  color: white;
-  border-radius: 3px;
-  box-shadow: 1px 1px 3px #666;
-  border: none;
-  padding: 5px;
-`;
-
-const TodoList = styled.div`
-  margin-top: 10px;
-`;
-
-const ClearTodo = styled.button`
-  font-family: "ubuntu";
-  width: 120px;
-  background: #c8553d;
-  color: white;
-  border-radius: 3px;
-  box-shadow: 1px 1px 3px #666;
-  border: none;
-  padding: 5px;
-  margin: 10px;
-`;
+import {
+  TodoWrapper,
+  Title,
+  CreateTodo,
+  TodoInput,
+  AddButton,
+  SelectTodo,
+  AllButton,
+  ActiveButton,
+  CompletedButton,
+  TodoList,
+  ClearTodo,
+} from "./styles/TodoContainer.style";
 
 export default function TodoContainer() {
   const id = useRef(1);
