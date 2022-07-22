@@ -5,8 +5,6 @@ import {
   Title,
   CreateTodo,
   TodoInput,
-  AddButton,
-  SelectTodo,
   AllButton,
   ActiveButton,
   CompletedButton,
@@ -21,20 +19,30 @@ export default function TodoContainer() {
   const [filter, setFilter] = useState("all");
 
   useEffect(() => {
-    if (localStorage.getItem("savedTasks")) {
-      const savedTasks = JSON.parse(localStorage.getItem("savedTasks"));
-      setTodos(savedTasks);
+    if (localStorage.getItem("savedLocalTodos")) {
+      const savedLocalTodos = JSON.parse(
+        localStorage.getItem("savedLocalTodos")
+      );
+      setTodos(savedLocalTodos);
     }
   }, []);
 
-  const handleAddTodo = useCallback(() => {
-    if (!value || value.trim() === "") return;
-    const todo = { id: id.current, content: value, isDone: false };
-    localStorage.setItem("savedTasks", JSON.stringify([...todos, todo]));
-    setTodos([...todos, todo]);
-    setValue("");
-    id.current++;
-  }, [todos, value]);
+  const handleAddTodo = useCallback(
+    (e) => {
+      if (!value || value.trim() === "") return;
+      if (e.key === "Enter") {
+        const todo = { id: id.current, content: value, isDone: false };
+        localStorage.setItem(
+          "savedLocalTodos",
+          JSON.stringify([...todos, todo])
+        );
+        setTodos([...todos, todo]);
+        setValue("");
+        id.current++;
+      }
+    },
+    [todos, value]
+  );
 
   const handleInputChange = useCallback((e) => {
     setValue(e.target.value);
@@ -43,7 +51,7 @@ export default function TodoContainer() {
   const handleDeleteTodo = useCallback(
     (id) => {
       const leftTodos = todos.filter((todo) => todo.id !== id);
-      localStorage.setItem("savedTasks", JSON.stringify(leftTodos));
+      localStorage.setItem("savedLocalTodos", JSON.stringify(leftTodos));
       setTodos(leftTodos);
     },
     [todos]
@@ -58,7 +66,10 @@ export default function TodoContainer() {
           isDone: !todo.isDone,
         };
       });
-      localStorage.setItem("savedTasks", JSON.stringify(todosCompleteStatus));
+      localStorage.setItem(
+        "savedLocalTodos",
+        JSON.stringify(todosCompleteStatus)
+      );
       setTodos(todosCompleteStatus);
     },
     [todos]
@@ -66,7 +77,7 @@ export default function TodoContainer() {
 
   const handleTodoClear = useCallback(() => {
     const todosClearAll = todos.filter((todo) => todo.isDone !== true);
-    localStorage.setItem("savedTasks", JSON.stringify(todosClearAll));
+    localStorage.setItem("savedLocalTodos", JSON.stringify(todosClearAll));
     setTodos(todosClearAll);
   }, [todos]);
 
@@ -86,14 +97,16 @@ export default function TodoContainer() {
     <TodoWrapper>
       <Title>Todo List</Title>
       <CreateTodo>
-        <TodoInput value={value} onChange={handleInputChange}></TodoInput>
-        <AddButton onClick={handleAddTodo}>Add Todo</AddButton>
+        <TodoInput
+          placeholder="press enter to add a task"
+          value={value}
+          onChange={handleInputChange}
+          onKeyDown={handleAddTodo}
+        ></TodoInput>
       </CreateTodo>
-      <SelectTodo>
-        <AllButton onClick={filterAll}>All</AllButton>
-        <ActiveButton onClick={filterUndone}>Active</ActiveButton>
-        <CompletedButton onClick={filterDone}>Completed</CompletedButton>
-      </SelectTodo>
+      <AllButton onClick={filterAll}>All</AllButton>
+      <ActiveButton onClick={filterUndone}>Active</ActiveButton>
+      <CompletedButton onClick={filterDone}>Completed</CompletedButton>
       <TodoList>
         {todos
           .filter((todo) => {

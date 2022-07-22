@@ -27,20 +27,9 @@ export const TodoInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 1px 1px 3px #ccc;
+  padding: 6px;
+  font-size: 16px;
 `;
-
-export const AddButton = styled.button`
-  font-family: "ubuntu";
-  width: 80px;
-  background: black;
-  color: white;
-  border-radius: 3px;
-  box-shadow: 1px 1px 3px #666;
-  border: none;
-  padding: 5px;
-`;
-
-export const SelectTodo = styled.div``;
 
 export const AllButton = styled.button`
   font-family: "ubuntu";
