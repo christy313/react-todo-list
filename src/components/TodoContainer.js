@@ -23,7 +23,7 @@ export default function TodoContainer() {
   useEffect(() => {
     if (localStorage.getItem("savedTasks")) {
       const savedTasks = JSON.parse(localStorage.getItem("savedTasks"));
-      console.log(savedTasks);
+      // console.log(savedTasks);
       setTodos(savedTasks);
     }
   }, []);
@@ -43,7 +43,9 @@ export default function TodoContainer() {
 
   const handleDeleteTodo = useCallback(
     (id) => {
-      setTodos(todos.filter((todo) => todo.id !== id));
+      const leftTodos = todos.filter((todo) => todo.id !== id);
+      localStorage.setItem("savedTasks", JSON.stringify(leftTodos));
+      setTodos(leftTodos);
     },
     [todos]
   );
