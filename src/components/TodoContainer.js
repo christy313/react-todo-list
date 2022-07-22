@@ -23,7 +23,6 @@ export default function TodoContainer() {
   useEffect(() => {
     if (localStorage.getItem("savedTasks")) {
       const savedTasks = JSON.parse(localStorage.getItem("savedTasks"));
-      // console.log(savedTasks);
       setTodos(savedTasks);
     }
   }, []);
