@@ -65,7 +65,9 @@ export default function TodoContainer() {
   );
 
   const handleTodoClear = useCallback(() => {
-    setTodos(todos.filter((todo) => todo.isDone !== true));
+    const todosClearAll = todos.filter((todo) => todo.isDone !== true);
+    localStorage.setItem("savedTasks", JSON.stringify(todosClearAll));
+    setTodos(todosClearAll);
   }, [todos]);
 
   const filterAll = useCallback(() => {
