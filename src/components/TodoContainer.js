@@ -29,7 +29,7 @@ export default function TodoContainer() {
 
   const handleAddTodo = useCallback(() => {
     if (!value) return alert("wanna type something?");
-    const todo = { id: id.current, content: value };
+    const todo = { id: id.current, content: value, isDone: false };
     localStorage.setItem("savedTasks", JSON.stringify([...todos, todo]));
     setTodos([...todos, todo]);
     setValue("");
@@ -51,15 +51,15 @@ export default function TodoContainer() {
 
   const handleTodoIsDone = useCallback(
     (id) => {
-      setTodos(
-        todos.map((todo) => {
-          if (todo.id !== id) return todo;
-          return {
-            ...todo,
-            isDone: !todo.isDone,
-          };
-        })
-      );
+      const todosCompleteStatus = todos.map((todo) => {
+        if (todo.id !== id) return todo;
+        return {
+          ...todo,
+          isDone: !todo.isDone,
+        };
+      });
+      localStorage.setItem("savedTasks", JSON.stringify(todosCompleteStatus));
+      setTodos(todosCompleteStatus);
     },
     [todos]
   );
