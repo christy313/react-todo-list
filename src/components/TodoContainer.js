@@ -49,9 +49,9 @@ export default function TodoContainer() {
     [todoList, todoContent]
   );
 
-  const handleInputChange = useCallback((e) => {
+  const handleInputChange = (e) => {
     setTodoContent(e.target.value);
-  }, []);
+  };
 
   const handleDeleteTodo = useCallback(
     (id) => {
@@ -80,11 +80,11 @@ export default function TodoContainer() {
     [todoList]
   );
 
-  const handleTodoClear = useCallback(() => {
+  const handleTodoClear = () => {
     const todosClearAll = todoList.filter((todo) => todo.isDone !== true);
     localStorage.setItem("savedLocalTodos", JSON.stringify(todosClearAll));
     setTodoList(todosClearAll);
-  }, [todoList]);
+  };
 
   const filterAll = useCallback(() => {
     setShowTodoStatus(todoStatus.All);
