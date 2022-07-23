@@ -10,56 +10,56 @@ import {
   CompletedButton,
   TodoList,
   ClearTodo,
-} from "./styles/TodoContainer.style";
+} from "../styles/TodoContainer.style";
 
 export default function TodoContainer() {
   const id = useRef(1);
-  const [todos, setTodos] = useState([]);
-  const [value, setValue] = useState("");
-  const [filter, setFilter] = useState("all");
+  const [todoList, setTodoList] = useState([]);
+  const [todoContent, setTodoContent] = useState("");
+  const [showTodoStatus, setShowTodoStatus] = useState("all");
 
   useEffect(() => {
     if (localStorage.getItem("savedLocalTodos")) {
       const savedLocalTodos = JSON.parse(
         localStorage.getItem("savedLocalTodos")
       );
-      setTodos(savedLocalTodos);
+      setTodoList(savedLocalTodos);
     }
   }, []);
 
   const handleAddTodo = useCallback(
     (e) => {
-      if (!value || value.trim() === "") return;
+      if (!todoContent || todoContent.trim() === "") return;
       if (e.key === "Enter") {
-        const todo = { id: id.current, content: value, isDone: false };
+        const todo = { id: id.current, content: todoContent, isDone: false };
         localStorage.setItem(
           "savedLocalTodos",
-          JSON.stringify([...todos, todo])
+          JSON.stringify([...todoList, todo])
         );
-        setTodos([...todos, todo]);
-        setValue("");
+        setTodoList([...todoList, todo]);
+        setTodoContent("");
         id.current++;
       }
     },
-    [todos, value]
+    [todoList, todoContent]
   );
 
   const handleInputChange = useCallback((e) => {
-    setValue(e.target.value);
+    setTodoContent(e.target.value);
   }, []);
 
   const handleDeleteTodo = useCallback(
     (id) => {
-      const leftTodos = todos.filter((todo) => todo.id !== id);
+      const leftTodos = todoList.filter((todo) => todo.id !== id);
       localStorage.setItem("savedLocalTodos", JSON.stringify(leftTodos));
-      setTodos(leftTodos);
+      setTodoList(leftTodos);
     },
-    [todos]
+    [todoList]
   );
 
   const handleTodoIsDone = useCallback(
     (id) => {
-      const todosCompleteStatus = todos.map((todo) => {
+      const todosCompleteStatus = todoList.map((todo) => {
         if (todo.id !== id) return todo;
         return {
           ...todo,
@@ -70,27 +70,27 @@ export default function TodoContainer() {
         "savedLocalTodos",
         JSON.stringify(todosCompleteStatus)
       );
-      setTodos(todosCompleteStatus);
+      setTodoList(todosCompleteStatus);
     },
-    [todos]
+    [todoList]
   );
 
   const handleTodoClear = useCallback(() => {
-    const todosClearAll = todos.filter((todo) => todo.isDone !== true);
+    const todosClearAll = todoList.filter((todo) => todo.isDone !== true);
     localStorage.setItem("savedLocalTodos", JSON.stringify(todosClearAll));
-    setTodos(todosClearAll);
-  }, [todos]);
+    setTodoList(todosClearAll);
+  }, [todoList]);
 
   const filterAll = useCallback(() => {
-    setFilter("all");
+    setShowTodoStatus("all");
   }, []);
 
   const filterDone = useCallback(() => {
-    setFilter("done");
+    setShowTodoStatus("done");
   }, []);
 
   const filterUndone = useCallback(() => {
-    setFilter("undone");
+    setShowTodoStatus("undone");
   }, []);
 
   return (
@@ -99,7 +99,7 @@ export default function TodoContainer() {
       <CreateTodo>
         <TodoInput
           placeholder="press enter to add a task"
-          value={value}
+          value={todoContent}
           onChange={handleInputChange}
           onKeyDown={handleAddTodo}
         ></TodoInput>
@@ -108,10 +108,10 @@ export default function TodoContainer() {
       <ActiveButton onClick={filterUndone}>Active</ActiveButton>
       <CompletedButton onClick={filterDone}>Completed</CompletedButton>
       <TodoList>
-        {todos
+        {todoList
           .filter((todo) => {
-            if (filter === "all") return todo;
-            return filter === "done" ? todo.isDone : !todo.isDone;
+            if (showTodoStatus === "all") return todo;
+            return showTodoStatus === "done" ? todo.isDone : !todo.isDone;
           })
           .map((todo) => (
             <TodoItem

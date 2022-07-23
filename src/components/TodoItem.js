@@ -5,7 +5,7 @@ import {
   DeleteButton,
   CheckButton,
   ButtonWrapper,
-} from "./styles/TodoItem.style";
+} from "../styles/TodoItem.style";
 
 const TodoItem = ({ todo, handleDeleteTodo, handleTodoIsDone }) => {
   const handleDeleteClick = () => {
