@@ -13,10 +13,15 @@ import {
 } from "../styles/TodoContainer.style";
 
 export default function TodoContainer() {
+  const todoStatus = Object.freeze({
+    All: "all",
+    Done: "done",
+    Undone: "undone",
+  });
   const id = useRef(1);
   const [todoList, setTodoList] = useState([]);
   const [todoContent, setTodoContent] = useState("");
-  const [showTodoStatus, setShowTodoStatus] = useState("all");
+  const [showTodoStatus, setShowTodoStatus] = useState(todoStatus.All);
 
   useEffect(() => {
     if (localStorage.getItem("savedLocalTodos")) {
@@ -82,16 +87,16 @@ export default function TodoContainer() {
   }, [todoList]);
 
   const filterAll = useCallback(() => {
-    setShowTodoStatus("all");
-  }, []);
+    setShowTodoStatus(todoStatus.All);
+  }, [todoStatus.All]);
 
   const filterDone = useCallback(() => {
-    setShowTodoStatus("done");
-  }, []);
+    setShowTodoStatus(todoStatus.Done);
+  }, [todoStatus.Done]);
 
   const filterUndone = useCallback(() => {
-    setShowTodoStatus("undone");
-  }, []);
+    setShowTodoStatus(todoStatus.Undone);
+  }, [todoStatus.Undone]);
 
   return (
     <TodoWrapper>
@@ -110,8 +115,10 @@ export default function TodoContainer() {
       <TodoList>
         {todoList
           .filter((todo) => {
-            if (showTodoStatus === "all") return todo;
-            return showTodoStatus === "done" ? todo.isDone : !todo.isDone;
+            if (showTodoStatus === todoStatus.All) return todo;
+            return showTodoStatus === todoStatus.Done
+              ? todo.isDone
+              : !todo.isDone;
           })
           .map((todo) => (
             <TodoItem
