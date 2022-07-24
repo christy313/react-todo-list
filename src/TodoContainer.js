@@ -13,11 +13,11 @@ import {
 } from "./styles/TodoContainer.style";
 
 export default function TodoContainer() {
-  const todoStatus = Object.freeze({
+  const todoStatus = {
     All: "all",
     Done: "done",
     Undone: "undone",
-  });
+  };
 
   const [todoList, setTodoList] = useState([]);
   const [todoContent, setTodoContent] = useState("");
