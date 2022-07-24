@@ -24,24 +24,23 @@ export default function TodoContainer() {
   const [showTodoStatus, setShowTodoStatus] = useState(todoStatus.All);
 
   useEffect(() => {
-    if (localStorage.getItem("savedLocalTodos")) {
-      const savedLocalTodos = JSON.parse(
-        localStorage.getItem("savedLocalTodos")
-      );
-      setTodoList(savedLocalTodos);
+    const todoList = JSON.parse(localStorage.getItem("todoList"));
+    if (todoList) {
+      setTodoList(todoList);
     }
   }, []);
+
+  const setLocalStorage = (todoList, todo) => {
+    localStorage.setItem("todoList", JSON.stringify([...todoList, todo]));
+    setTodoList([...todoList, todo]);
+  };
 
   const handleAddTodo = useCallback(
     (e) => {
       if (!todoContent || todoContent.trim() === "") return;
       if (e.key === "Enter") {
         const todo = { id: id.current, content: todoContent, isDone: false };
-        localStorage.setItem(
-          "savedLocalTodos",
-          JSON.stringify([...todoList, todo])
-        );
-        setTodoList([...todoList, todo]);
+        setLocalStorage(todoList, todo);
         setTodoContent("");
         id.current++;
       }
@@ -56,8 +55,7 @@ export default function TodoContainer() {
   const handleDeleteTodo = useCallback(
     (id) => {
       const leftTodos = todoList.filter((todo) => todo.id !== id);
-      localStorage.setItem("savedLocalTodos", JSON.stringify(leftTodos));
-      setTodoList(leftTodos);
+      setLocalStorage(todoList, leftTodos);
     },
     [todoList]
   );
@@ -71,19 +69,14 @@ export default function TodoContainer() {
           isDone: !todo.isDone,
         };
       });
-      localStorage.setItem(
-        "savedLocalTodos",
-        JSON.stringify(todosCompleteStatus)
-      );
-      setTodoList(todosCompleteStatus);
+      setLocalStorage(todoList, todosCompleteStatus);
     },
     [todoList]
   );
 
   const handleTodoClear = () => {
     const todosClearAll = todoList.filter((todo) => todo.isDone !== true);
-    localStorage.setItem("savedLocalTodos", JSON.stringify(todosClearAll));
-    setTodoList(todosClearAll);
+    setLocalStorage(todoList, todosClearAll);
   };
 
   const filterAll = useCallback(() => {
