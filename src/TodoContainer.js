@@ -83,7 +83,7 @@ export default function TodoContainer() {
     [todoList]
   );
 
-  const handleTodoClear = () => {
+  const clearCompletedTodo = () => {
     const todosClearAll = todoList.filter((todo) => todo.isDone !== true);
     reviseTodoLocalStorage(todosClearAll);
   };
@@ -131,7 +131,7 @@ export default function TodoContainer() {
             />
           ))}
       </TodoList>
-      <ClearTodo onClick={handleTodoClear}>Clear Completed</ClearTodo>
+      <ClearTodo onClick={clearCompletedTodo}>Clear Completed</ClearTodo>
     </TodoWrapper>
   );
 }
