@@ -30,7 +30,7 @@ export default function TodoContainer() {
     }
   }, []);
 
-  const setLocalStorage = (todoList, todo) => {
+  const updateLocalStorage = (todoList, todo) => {
     localStorage.setItem("todoList", JSON.stringify([...todoList, todo]));
     setTodoList([...todoList, todo]);
   };
@@ -40,7 +40,7 @@ export default function TodoContainer() {
       if (!todoContent || todoContent.trim() === "") return;
       if (e.key === "Enter") {
         const todo = { id: id.current, content: todoContent, isDone: false };
-        setLocalStorage(todoList, todo);
+        updateLocalStorage(todoList, todo);
         setTodoContent("");
         id.current++;
       }
@@ -55,10 +55,15 @@ export default function TodoContainer() {
   const handleDeleteTodo = useCallback(
     (id) => {
       const leftTodos = todoList.filter((todo) => todo.id !== id);
-      setLocalStorage(todoList, leftTodos);
+      updateLocalStorage(todoList, leftTodos);
     },
     [todoList]
   );
+
+  // const setLocalStorage = (todoList, todo) => {
+  //   localStorage.setItem("todoList", JSON.stringify([...todoList, todo]));
+  //   setTodoList([...todoList, todo]);
+  // };
 
   const handleTodoIsDone = useCallback(
     (id) => {
@@ -69,14 +74,14 @@ export default function TodoContainer() {
           isDone: !todo.isDone,
         };
       });
-      setLocalStorage(todoList, todosCompleteStatus);
+      updateLocalStorage(todoList, todosCompleteStatus);
     },
     [todoList]
   );
 
   const handleTodoClear = () => {
     const todosClearAll = todoList.filter((todo) => todo.isDone !== true);
-    setLocalStorage(todoList, todosClearAll);
+    updateLocalStorage(todoList, todosClearAll);
   };
 
   const filterAll = useCallback(() => {
