@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
-import TodoItem from "./TodoItem";
+import TodoItem from "./components/TodoItem";
 import {
   TodoWrapper,
   Title,
@@ -10,7 +10,7 @@ import {
   CompletedButton,
   TodoList,
   ClearTodo,
-} from "../styles/TodoContainer.style";
+} from "./styles/TodoContainer.style";
 
 export default function TodoContainer() {
   const todoStatus = Object.freeze({
@@ -35,7 +35,7 @@ export default function TodoContainer() {
     setTodoList([...todoList, todo]);
   };
 
-  const reviseTodoLocalStorage = (todoList, todo) => {
+  const reviseTodoLocalStorage = (todo) => {
     localStorage.setItem("todoList", JSON.stringify(todo));
     setTodoList(todo);
   };
@@ -60,15 +60,10 @@ export default function TodoContainer() {
   const handleDeleteTodo = useCallback(
     (id) => {
       const leftTodos = todoList.filter((todo) => todo.id !== id);
-      reviseTodoLocalStorage(todoList, leftTodos);
+      reviseTodoLocalStorage(leftTodos);
     },
     [todoList]
   );
-
-  // const setLocalStorage = (todoList, todo) => {
-  //   localStorage.setItem("todoList", JSON.stringify([...todoList, todo]));
-  //   setTodoList([...todoList, todo]);
-  // };
 
   const handleTodoIsDone = useCallback(
     (id) => {
@@ -79,14 +74,14 @@ export default function TodoContainer() {
           isDone: !todo.isDone,
         };
       });
-      reviseTodoLocalStorage(todoList, todosCompleteStatus);
+      reviseTodoLocalStorage(todosCompleteStatus);
     },
     [todoList]
   );
 
   const handleTodoClear = () => {
     const todosClearAll = todoList.filter((todo) => todo.isDone !== true);
-    reviseTodoLocalStorage(todoList, todosClearAll);
+    reviseTodoLocalStorage(todosClearAll);
   };
 
   const filterAll = useCallback(() => {
