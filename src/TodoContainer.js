@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import TodoItem from "./components/TodoItem";
 import {
   TodoWrapper,
@@ -18,10 +18,15 @@ export default function TodoContainer() {
     Done: "done",
     Undone: "undone",
   });
-  const id = useRef(1);
+
   const [todoList, setTodoList] = useState([]);
   const [todoContent, setTodoContent] = useState("");
   const [showTodoStatus, setShowTodoStatus] = useState(todoStatus.All);
+
+  const getId = () => {
+    let id = new Date().getTime();
+    return id;
+  };
 
   useEffect(() => {
     const todoList = JSON.parse(localStorage.getItem("todoList"));
@@ -44,10 +49,9 @@ export default function TodoContainer() {
     (e) => {
       if (!todoContent || todoContent.trim() === "") return;
       if (e.key === "Enter") {
-        const todo = { id: id.current, content: todoContent, isDone: false };
+        const todo = { id: getId(), content: todoContent, isDone: false };
         addTodoLocalStorage(todoList, todo);
         setTodoContent("");
-        id.current++;
       }
     },
     [todoList, todoContent]
