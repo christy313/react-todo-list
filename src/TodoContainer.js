@@ -58,14 +58,13 @@ export default function TodoContainer() {
     setTodoContent(e.target.value);
   };
 
-  // revise it to local attribute
-  const handleDeleteTodo = (id) => {
-    const leftTodos = todoList.filter((todo) => todo.id !== id);
+  const handleDeleteTodo = (id, todos) => {
+    const leftTodos = todos.filter((todo) => todo.id !== id);
     reviseTodoLocalStorage(leftTodos);
   };
 
-  const handleTodoIsDone = (id) => {
-    const todosCompleteStatus = todoList.map((todo) => {
+  const handleTodoIsDone = (id, todos) => {
+    const todosCompleteStatus = todos.map((todo) => {
       if (todo.id !== id) return todo;
       return {
         ...todo,
@@ -75,8 +74,8 @@ export default function TodoContainer() {
     reviseTodoLocalStorage(todosCompleteStatus);
   };
 
-  const clearCompletedTodo = () => {
-    const todosClearAll = todoList.filter((todo) => todo.isDone !== true);
+  const clearCompletedTodo = (todos) => {
+    const todosClearAll = todos.filter((todo) => todo.isDone !== true);
     reviseTodoLocalStorage(todosClearAll);
   };
 
@@ -111,13 +110,15 @@ export default function TodoContainer() {
           .map((todo) => (
             <TodoItem
               key={todo.id}
-              handleDeleteTodo={handleDeleteTodo}
-              handleTodoIsDone={handleTodoIsDone}
+              handleDeleteTodo={() => handleDeleteTodo(todo.id, todoList)}
+              handleTodoIsDone={() => handleTodoIsDone(todo.id, todoList)}
               todo={todo}
             />
           ))}
       </TodoList>
-      <ClearTodo onClick={clearCompletedTodo}>Clear Completed</ClearTodo>
+      <ClearTodo onClick={() => clearCompletedTodo(todoList)}>
+        Clear Completed
+      </ClearTodo>
     </TodoWrapper>
   );
 }
