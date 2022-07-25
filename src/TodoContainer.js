@@ -74,6 +74,7 @@ export default function TodoContainer() {
     });
     reviseTodoLocalStorage(todosCompleteStatus);
   };
+
   const clearCompletedTodo = () => {
     const todosClearAll = todoList.filter((todo) => todo.isDone !== true);
     reviseTodoLocalStorage(todosClearAll);
