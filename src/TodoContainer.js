@@ -45,17 +45,16 @@ export default function TodoContainer() {
     setTodoList(todo);
   };
 
-  const handleAddTodo = useCallback(
-    (e) => {
-      if (!todoContent || todoContent.trim() === "") return;
+  const handleAddTodo = (content) => {
+    return function addTodoContent(e) {
       if (e.key === "Enter") {
-        const todo = { id: getId(), content: todoContent, isDone: false };
+        if (!content || content.trim() === "") return;
+        const todo = { id: getId(), content: content, isDone: false };
         addTodoLocalStorage(todoList, todo);
         setTodoContent("");
       }
-    },
-    [todoList, todoContent]
-  );
+    };
+  };
 
   const handleInputChange = (e) => {
     setTodoContent(e.target.value);
@@ -108,7 +107,7 @@ export default function TodoContainer() {
           placeholder="press enter to add a task"
           value={todoContent}
           onChange={handleInputChange}
-          onKeyDown={handleAddTodo}
+          onKeyDown={handleAddTodo(todoContent)}
         ></TodoInput>
       </CreateTodo>
       <AllButton onClick={filterAll}>All</AllButton>
