@@ -45,17 +45,13 @@ export default function TodoContainer() {
     setTodoList(todo);
   };
 
-  // revise it to local attribute
-  // onChange={ (e) => addTodoContent(e, content) }
-  const handleAddTodo = (content) => {
-    return function addTodoContent(e) {
-      if (e.key === "Enter") {
-        if (!content || content.trim() === "") return;
-        const todo = { id: getId(), content: content, isDone: false };
-        addTodoLocalStorage(todoList, todo);
-        setTodoContent("");
-      }
-    };
+  const addTodoContent = (e, content) => {
+    if (e.key === "Enter") {
+      if (!content || content.trim() === "") return;
+      const todo = { id: getId(), content: content, isDone: false };
+      addTodoLocalStorage(todoList, todo);
+      setTodoContent("");
+    }
   };
 
   const handleInputChange = (e) => {
@@ -93,7 +89,7 @@ export default function TodoContainer() {
           placeholder="press enter to add a task"
           value={todoContent}
           onChange={handleInputChange}
-          onKeyDown={handleAddTodo(todoContent)}
+          onKeyDown={(e) => addTodoContent(e, todoContent)}
         ></TodoInput>
       </CreateTodo>
       <AllButton onClick={filterTodoStatus(todoStatus.All)}>All</AllButton>
