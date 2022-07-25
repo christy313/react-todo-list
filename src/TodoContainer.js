@@ -60,13 +60,10 @@ export default function TodoContainer() {
     setTodoContent(e.target.value);
   };
 
-  const handleDeleteTodo = useCallback(
-    (id) => {
-      const leftTodos = todoList.filter((todo) => todo.id !== id);
-      reviseTodoLocalStorage(leftTodos);
-    },
-    [todoList]
-  );
+  const handleDeleteTodo = (id) => {
+    const leftTodos = todoList.filter((todo) => todo.id !== id);
+    reviseTodoLocalStorage(leftTodos);
+  };
 
   const handleTodoIsDone = useCallback(
     (id) => {
