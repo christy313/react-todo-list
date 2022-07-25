@@ -7,13 +7,13 @@ import {
   ButtonWrapper,
 } from "../styles/TodoItem.style";
 
-const TodoItem = ({ todo, todos, handleDeleteTodo, handleTodoIsDone }) => {
+const TodoItem = ({ todo, todoItems, handleDeleteTodo, handleTodoIsDone }) => {
   const handleDeleteClick = () => {
-    handleDeleteTodo(todo.id, todos);
+    handleDeleteTodo(todo.id, todoItems);
   };
 
   const handleIsDoneClick = () => {
-    handleTodoIsDone(todo.id, todos);
+    handleTodoIsDone(todo.id, todoItems);
   };
 
   return (

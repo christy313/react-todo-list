@@ -35,9 +35,9 @@ export default function TodoContainer() {
     }
   }, []);
 
-  const addTodoLocalStorage = (todoList, todo) => {
-    localStorage.setItem("todoList", JSON.stringify([...todoList, todo]));
-    setTodoList([...todoList, todo]);
+  const addTodoLocalStorage = (todoItems, todo) => {
+    localStorage.setItem("todoList", JSON.stringify([...todoItems, todo]));
+    setTodoList([...todoItems, todo]);
   };
 
   const reviseTodoLocalStorage = (todo) => {
@@ -58,13 +58,13 @@ export default function TodoContainer() {
     setTodoContent(e.target.value);
   };
 
-  const handleDeleteTodo = (id, todos) => {
-    const leftTodos = todos.filter((todo) => todo.id !== id);
+  const handleDeleteTodo = (id, todoItems) => {
+    const leftTodos = todoItems.filter((todo) => todo.id !== id);
     reviseTodoLocalStorage(leftTodos);
   };
 
-  const handleTodoIsDone = (id, todos) => {
-    const todosCompleteStatus = todos.map((todo) => {
+  const handleTodoIsDone = (id, todoItems) => {
+    const todosCompleteStatus = todoItems.map((todo) => {
       if (todo.id !== id) return todo;
       return {
         ...todo,
@@ -74,8 +74,8 @@ export default function TodoContainer() {
     reviseTodoLocalStorage(todosCompleteStatus);
   };
 
-  const clearCompletedTodo = (todos) => {
-    const todosClearAll = todos.filter((todo) => todo.isDone !== true);
+  const clearCompletedTodo = (todoItems) => {
+    const todosClearAll = todoItems.filter((todo) => todo.isDone !== true);
     reviseTodoLocalStorage(todosClearAll);
   };
 
