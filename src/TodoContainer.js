@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import TodoItem from "./components/TodoItem";
 import {
   TodoWrapper,
@@ -65,36 +65,27 @@ export default function TodoContainer() {
     reviseTodoLocalStorage(leftTodos);
   };
 
-  const handleTodoIsDone = useCallback(
-    (id) => {
-      const todosCompleteStatus = todoList.map((todo) => {
-        if (todo.id !== id) return todo;
-        return {
-          ...todo,
-          isDone: !todo.isDone,
-        };
-      });
-      reviseTodoLocalStorage(todosCompleteStatus);
-    },
-    [todoList]
-  );
+  const handleTodoIsDone = (id) => {
+    const todosCompleteStatus = todoList.map((todo) => {
+      if (todo.id !== id) return todo;
+      return {
+        ...todo,
+        isDone: !todo.isDone,
+      };
+    });
+    reviseTodoLocalStorage(todosCompleteStatus);
+  };
 
   const clearCompletedTodo = () => {
     const todosClearAll = todoList.filter((todo) => todo.isDone !== true);
     reviseTodoLocalStorage(todosClearAll);
   };
 
-  const filterAll = useCallback(() => {
-    setShowTodoStatus(todoStatus.All);
-  }, [todoStatus.All]);
+  const filterAll = setShowTodoStatus(todoStatus.All);
 
-  const filterDone = useCallback(() => {
-    setShowTodoStatus(todoStatus.Done);
-  }, [todoStatus.Done]);
+  const filterDone = setShowTodoStatus(todoStatus.Done);
 
-  const filterUndone = useCallback(() => {
-    setShowTodoStatus(todoStatus.Undone);
-  }, [todoStatus.Undone]);
+  const filterUndone = setShowTodoStatus(todoStatus.Undone);
 
   return (
     <TodoWrapper>
