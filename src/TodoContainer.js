@@ -45,6 +45,8 @@ export default function TodoContainer() {
     setTodoList(todo);
   };
 
+  // revise it to local attribute
+  // onChange={ (e) => addTodoContent(e, content) }
   const handleAddTodo = (content) => {
     return function addTodoContent(e) {
       if (e.key === "Enter") {
@@ -60,6 +62,7 @@ export default function TodoContainer() {
     setTodoContent(e.target.value);
   };
 
+  // revise it to local attribute
   const handleDeleteTodo = (id) => {
     const leftTodos = todoList.filter((todo) => todo.id !== id);
     reviseTodoLocalStorage(leftTodos);
@@ -80,9 +83,7 @@ export default function TodoContainer() {
     reviseTodoLocalStorage(todosClearAll);
   };
 
-  const filterAll = () => setShowTodoStatus(todoStatus.All);
-  const filterDone = () => setShowTodoStatus(todoStatus.Done);
-  const filterUndone = () => setShowTodoStatus(todoStatus.Undone);
+  const filterTodoStatus = (status) => () => setShowTodoStatus(status);
 
   return (
     <TodoWrapper>
@@ -95,9 +96,13 @@ export default function TodoContainer() {
           onKeyDown={handleAddTodo(todoContent)}
         ></TodoInput>
       </CreateTodo>
-      <AllButton onClick={filterAll}>All</AllButton>
-      <ActiveButton onClick={filterUndone}>Active</ActiveButton>
-      <CompletedButton onClick={filterDone}>Completed</CompletedButton>
+      <AllButton onClick={filterTodoStatus(todoStatus.All)}>All</AllButton>
+      <ActiveButton onClick={filterTodoStatus(todoStatus.Undone)}>
+        Active
+      </ActiveButton>
+      <CompletedButton onClick={filterTodoStatus(todoStatus.Done)}>
+        Completed
+      </CompletedButton>
       <TodoList>
         {todoList
           .filter((todo) => {
