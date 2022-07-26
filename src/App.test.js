@@ -1,6 +1,8 @@
-import { getId } from "./TodoContainer";
+const getId = () => {
+  let id = new Date().getTime();
+  return id;
+};
 
-test("id", () => {
-  // expect(getId).toBe(new Date().getTime());
-  expect(true).toBe(true);
+test("check id output", () => {
+  expect(getId()).toBe(new Date().getTime());
 });
