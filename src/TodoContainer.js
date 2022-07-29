@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TodoItem from "./components/TodoItem";
+import getId from "./helper";
+
 import {
   TodoWrapper,
   Title,
@@ -22,11 +24,6 @@ export default function TodoContainer() {
   const [todoList, setTodoList] = useState([]);
   const [todoContent, setTodoContent] = useState("");
   const [showTodoStatus, setShowTodoStatus] = useState(todoStatus.All);
-
-  const getId = () => {
-    let id = new Date().getTime();
-    return id;
-  };
 
   useEffect(() => {
     const todoList = JSON.parse(localStorage.getItem("todoList"));
