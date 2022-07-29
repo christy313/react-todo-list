@@ -1,9 +1,8 @@
-import getId from "./helper";
+describe("test getId function", () => {
+  it("mocks a date like new Date()", () => {
+    const mockDate = new Date(1659115097408);
+    const globalDate = jest.fn(() => mockDate);
 
-describe("getId", () => {
-  it("should generate an id by current time", () => {
-    expect(getId()).toBe(new Date().getTime());
+    expect(globalDate()).toBe(mockDate);
   });
 });
-const fixTime = new Date().getTime();
-console.log(fixTime);
