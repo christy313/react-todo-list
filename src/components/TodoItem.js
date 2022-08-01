@@ -1,62 +1,19 @@
-import styled from "styled-components";
 import { memo } from "react";
+import {
+  Todo,
+  TodoContent,
+  DeleteButton,
+  CheckButton,
+  ButtonWrapper,
+} from "../styles/TodoItem.style";
 
-const Todo = styled.div`
-  border: 1px solid #ccc;
-  & + & {
-    margin-top: 10px;
-  }
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px #ccc;
-`;
-
-const TodoContent = styled.div`
-  ${(props) =>
-    props.$isDone &&
-    `
-    text-decoration: line-through;
-  `}
-`;
-
-const DeleteButton = styled.button`
-  font-family: "ubuntu";
-  margin-right: 10px;
-  width: 80px;
-  background: #c8553d;
-  color: white;
-  border-radius: 3px;
-  border: none;
-  box-shadow: 1px 1px 3px #666;
-  padding: 5px;
-`;
-
-const CheckButton = styled.button`
-  font-family: "ubuntu";
-  width: 80px;
-  background: #73a6ad;
-  color: white;
-  border-radius: 3px;
-  border: none;
-  box-shadow: 1px 1px 3px #666;
-  padding: 5px;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-function TodoItem({ todo, handleDeleteTodo, handleTodoIsDone }) {
+const TodoItem = ({ todo, todoItems, handleDeleteTodo, handleTodoIsDone }) => {
   const handleDeleteClick = () => {
-    handleDeleteTodo(todo.id);
+    handleDeleteTodo(todo.id, todoItems);
   };
 
   const handleIsDoneClick = () => {
-    handleTodoIsDone(todo.id);
+    handleTodoIsDone(todo.id, todoItems);
   };
 
   return (
@@ -70,6 +27,6 @@ function TodoItem({ todo, handleDeleteTodo, handleTodoIsDone }) {
       </ButtonWrapper>
     </Todo>
   );
-}
+};
 
 export default memo(TodoItem);
