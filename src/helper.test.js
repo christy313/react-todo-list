@@ -1,8 +1,9 @@
-describe("test getId function", () => {
-  it("mocks a date like new Date()", () => {
-    const mockDate = new Date(1659115097408);
-    const globalDate = jest.fn(() => mockDate);
+import { getId } from "./helper";
 
-    expect(globalDate()).toBe(mockDate);
+describe("getId()", () => {
+  it("should return a correct id", () => {
+    const mockDate = new Date(1659195632003);
+    jest.spyOn(global, "Date").mockImplementation(() => mockDate);
+    expect(getId()).toEqual(mockDate.getTime());
   });
 });
