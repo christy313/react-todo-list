@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TodoItem from "./components/TodoItem";
-import getId from "./helper";
+import { getId } from "./helper";
 
 import {
   TodoWrapper,
